@@ -26,18 +26,21 @@
     // **********
     // console.log('this is FRONT END js')
     // **********
-    
+
     const socket = io()
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages')
 
+    // event listener on the html #form element. fires upon 'submit' event
     form.addEventListener('submit', e => {
       e.preventDefault();
+      // if html #input element has a value, then socket sends (emits) event called 'unicorn', passing in the argument of input.value.
+      // Then input.value is reassigned to an empty string
       if (input.value) {
-        socket.emit('chat message', input.value);
-        input.value = '';
+        socket.emit('unicorn', input.value);
+        input.value = 'pterodactyl';
       }
     });
 
