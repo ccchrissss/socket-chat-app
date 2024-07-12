@@ -4,12 +4,15 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { Server } from 'socket.io';
 
+// **********
+// console.log('this is BACK END js')
+// **********
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));FontFace
 
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
