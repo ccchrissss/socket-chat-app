@@ -19,7 +19,7 @@
   <body>
     <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+      <input id="input" autocomplete="off" placeholder="type your message here!" /><button>Send</button>
     </form>
   <script src="/socket.io/socket.io.js"></script>
   <script> 
@@ -40,7 +40,8 @@
       // Then input.value is reassigned to an empty string
       if (input.value) {
         socket.emit('unicorn', input.value);
-        input.value = 'pterodactyl';
+        input.value = '';
+        input.placeholder = '';
       }
     });
 
