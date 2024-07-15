@@ -30,6 +30,9 @@ io.on('connection', socket => {
     // console.log('message: ' + msg);
     io.emit('chat message', msg)
   });
+  socket.on('dragon', secretMessage => {
+    io.emit('dragon scroll', secretMessage)
+  })
 });
 
 server.listen(3000, () => {

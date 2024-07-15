@@ -17,6 +17,9 @@
     </style>
   </head>
   <body>
+    <h1>Socket Chat App</h1>
+    <h4>If you are truly a dragon rider you will see your messages appear below</h4>
+    <ul id="dragon-text"></ul>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" placeholder="type your message here!" /><button>Send</button>
@@ -32,6 +35,8 @@
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages')
+    const dragonText = document.getElementById('dragon-text')
+    const dragonMessage = 'This is a top secret message only for the dragon rider'
 
     // event listener on the html #form element. fires upon 'submit' event
     form.addEventListener('submit', e => {
@@ -40,9 +45,13 @@
       // Then input.value is reassigned to an empty string
       if (input.value) {
         socket.emit('unicorn', input.value);
+        console.log(`socket.emit('unicorn', input.value);`)
         input.value = '';
         input.placeholder = '';
       }
+
+        socket.emit('dragon', dragonMessage)
+
     });
 
     socket.on('chat message', msg => {
@@ -50,6 +59,14 @@
       item.textContent = msg;
       messages.appendChild(item);
       window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on('dragon scroll', secretMessage => {
+      console.log('This is a top secret message only for the dragon rider')
+      const item2 = document.createElement('li')
+      item2.textContent = secretMessage
+      dragonText.appendChild(item2)
+
     });
 
   </script>
