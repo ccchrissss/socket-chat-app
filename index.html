@@ -41,19 +41,26 @@
     // event listener on the html #form element. fires upon 'submit' event
     form.addEventListener('submit', e => {
       e.preventDefault();
-      // if html #input element has a value, then socket sends (emits) event called 'unicorn', passing in the argument of input.value.
-      // Then input.value is reassigned to an empty string
+      // if html #input element has a value
+        // then socket sends (emits) event called 'unicorn', passing in the argument of input.value
+        // then socket emits the event 'dragon', passing in the argument of dragonMessage
+        // then input.value is reassigned to an empty string
+        // then input.placeholder is reassigned to an empty string
       if (input.value) {
         socket.emit('unicorn', input.value);
-        console.log(`socket.emit('unicorn', input.value);`)
+        socket.emit('dragon', dragonMessage)
+        // console.log(`socket.emit('unicorn', input.value);`)
         input.value = '';
         input.placeholder = '';
       }
 
-        socket.emit('dragon', dragonMessage)
-
     });
 
+    // when socket receives 'chat message' event, passing in the argument of msg, do this:
+      // declare a variable called item and assign it to a new li element
+      // assign item's text content to msg
+      // add item as a child element to messages
+      // scroll the window to a height of 0
     socket.on('chat message', msg => {
       const item = document.createElement('li');
       item.textContent = msg;
@@ -61,12 +68,15 @@
       window.scrollTo(0, document.body.scrollHeight);
     });
 
+    // when socket receives 'dragon scroll' event, passing the the arg of secretMessage, do this:
+      // declare a variable called item2 and assign it to a new li element
+      // assign item2's text content to secretMessage
+      // add item2 as a child element to dragonText
     socket.on('dragon scroll', secretMessage => {
-      console.log('This is a top secret message only for the dragon rider')
+      // console.log('This is a top secret message only for the dragon rider')
       const item2 = document.createElement('li')
       item2.textContent = secretMessage
       dragonText.appendChild(item2)
-
     });
 
   </script>

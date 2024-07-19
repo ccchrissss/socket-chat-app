@@ -18,6 +18,10 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
 });
 
+// when the server receives the event 'connection', do this:
+  // console.log the string 'a user connected'
+  // when the socket receives the event 'disconnect', do this:
+    // console.log the string 'user disconnected'
 io.on('connection', socket => {
   console.log('a user connected');
   socket.on('disconnect', () => {
@@ -25,6 +29,11 @@ io.on('connection', socket => {
   });
 });
 
+// when the server receives the event 'connection', do this:
+  // when socket receives the event 'unicorn', do this: 
+    // server (io) emits the event 'chat message'
+  // when socket receives the event 'dragon', do this:
+    // server emits the event 'dragon scroll' 
 io.on('connection', socket => {
   socket.on('unicorn', msg => {
     // console.log('message: ' + msg);
