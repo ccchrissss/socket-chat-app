@@ -35,6 +35,11 @@ io.on('connection', socket => {
   // when socket receives the event 'dragon', do this:
     // server emits the event 'dragon scroll' 
 io.on('connection', socket => {
+
+  io.emit('hello', 'world')
+
+  io.emit('good morning', 'buenos dias', 'buongiorno', 'bonjour')
+
   socket.on('unicorn', msg => {
     // console.log('message: ' + msg);
     io.emit('chat message', msg)

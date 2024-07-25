@@ -38,6 +38,16 @@
     const dragonText = document.getElementById('dragon-text')
     const dragonMessage = 'This is a top secret message only for the dragon rider'
 
+    // when socket receives 'hello' event, do this:
+      // console.log the argument that was passed in
+    socket.on('hello', the1stArgument => {
+      console.log(the1stArgument)
+    })  
+
+    socket.on('good morning', (lang1, lang2, lang3) => {
+      console.log(`${lang1} | ${lang2} | ${lang3}`)
+    })
+
     // event listener on the html #form element. fires upon 'submit' event
     form.addEventListener('submit', e => {
       e.preventDefault();
