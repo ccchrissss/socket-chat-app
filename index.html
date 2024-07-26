@@ -20,6 +20,8 @@
     <h1>Socket Chat App</h1>
     <br />
     <div>
+      <!-- create serverside logic so when randomRoomBtn is clicked, socket.joins a random room, or when existingRoomBtn is clicked, socket.joins the specific inputted room -->
+       
       <button id="random-room-btn">Join a Random Room</button>
       <br />
       <br />
@@ -45,7 +47,8 @@
 
     const socket = io()
 
-
+    const randomRoomBtn = document.getElementById('random-room-btn')
+    const existingRoomBtn = document.getElementById('existing-room-btn')
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');

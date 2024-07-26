@@ -36,6 +36,10 @@ io.on('connection', socket => {
     // server emits the event 'dragon scroll' 
 io.on('connection', socket => {
 
+
+  // create serverside logic so when randomRoomBtn is clicked, socket.joins a random room, or when existingRoomBtn is clicked, socket.joins the specific inputted room
+  // socket.join()
+
   io.emit('hello', 'world')
 
   io.emit('good morning', 'buenos dias', 'buongiorno', 'bonjour')
