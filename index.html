@@ -18,6 +18,19 @@
   </head>
   <body>
     <h1>Socket Chat App</h1>
+    <br />
+    <div>
+      <button id="random-room-btn">Join a Random Room</button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <input id="room-input" autocomplete="off" placeholder="type your room name here!" /><span> Room</span>
+      <br />
+      <br />
+      <button id="existing-room-btn">Join this Existing Rooom</button>
+    </div>
+    <br />
     <h4>If you are truly a dragon rider you will see your messages appear below</h4>
     <ul id="dragon-text"></ul>
     <ul id="messages"></ul>
@@ -32,11 +45,14 @@
 
     const socket = io()
 
+
+
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages')
     const dragonText = document.getElementById('dragon-text')
     const dragonMessage = 'This is a top secret message only for the dragon rider'
+
 
     // when socket receives 'hello' event, do this:
       // console.log the argument that was passed in
