@@ -38,7 +38,7 @@ io.on('connection', socket => {
 
 
   // create serverside logic so when randomRoomBtn is clicked, socket.joins a random room, or when existingRoomBtn is clicked, socket.joins the specific inputted room
-  // socket.join()
+  socket.join()
 
   io.emit('hello', 'world')
 
