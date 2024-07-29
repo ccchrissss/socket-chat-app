@@ -19,7 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 //   res.sendFile(join(__dirname, 'index.html'));
 // });
 
-// send INDEX.EJS FILE
+// render INDEX.EJS FILE
 app.get('/', (req, res) => {
   res.render(join(__dirname, 'index.ejs'));
 });
@@ -35,7 +35,12 @@ io.on('connection', socket => {
   });
 });
 
+
 // when the server receives the event 'connection', do this:
+  // socket joins a specific room
+  // server broadcasts to a specific room, emitting the 'room greeting' event with an argument of 'room of requirement'
+  // server emits the event 'hello' with an argument of 'world'
+  // server emits the event 'good morning' with arguments of 'buenos dias', 'buongiorno', 'bonjour'
   // when socket receives the event 'unicorn', do this: 
     // server (io) emits the event 'chat message'
   // when socket receives the event 'dragon', do this:
