@@ -14,8 +14,14 @@ const io = new Server(server);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+// send INDEX.HTML file
+// app.get('/', (req, res) => {
+//   res.sendFile(join(__dirname, 'index.html'));
+// });
+
+// send INDEX.EJS FILE
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
+  res.render(join(__dirname, 'index.ejs'));
 });
 
 // when the server receives the event 'connection', do this:
@@ -38,7 +44,9 @@ io.on('connection', socket => {
 
 
   // create serverside logic so when randomRoomBtn is clicked, socket.joins a random room, or when existingRoomBtn is clicked, socket.joins the specific inputted room
-  socket.join()
+  socket.join('room-of-requirement')
+
+  io.to('room-of-requirement').emit('room greeting', 'room of requirement')
 
   io.emit('hello', 'world')
 
