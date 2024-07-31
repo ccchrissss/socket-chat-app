@@ -3,14 +3,30 @@ import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { Server } from 'socket.io';
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
 
 // **********
 // console.log('this is BACK END js')
 // **********
+const db = await open({
+  filename: 'chat.db',
+  driver: sqlite3.Database
+})
+
+await db.exec(`
+    CREATE TABLE IF NOT EXISTS messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_offset TEXT UNIQUE,
+      content TEXT
+  );
+`)
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  connectionStateRecovery: {}
+});
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -45,7 +61,7 @@ io.on('connection', socket => {
     // server (io) emits the event 'chat message'
   // when socket receives the event 'dragon', do this:
     // server emits the event 'dragon scroll' 
-io.on('connection', socket => {
+io.on('connection', async socket => {
 
 
   // create serverside logic so when randomRoomBtn is clicked, socket.joins a random room, or when existingRoomBtn is clicked, socket.joins the specific inputted room
@@ -57,10 +73,35 @@ io.on('connection', socket => {
 
   io.emit('good morning', 'buenos dias', 'buongiorno', 'bonjour')
 
-  socket.on('unicorn', msg => {
+  socket.on('unicorn', async msg => {
     // console.log('message: ' + msg);
-    io.emit('chat message', msg)
+
+    let result
+    try {
+      // store message in the database
+      result = await db.run('INSERT INTO messages (content) VALUES (?)', msg)
+    } catch (e) {
+      // TODO handle the failure
+      return;
+    }
+    // include the offset with the message
+    io.emit('chat message', msg, result.lastID)
   });
+
+  if (!socket.recovered) {
+    // if the connection state recovery was not successful
+    try {
+      await db.each('SELECT id, content FROM messages WHERE id > ?',
+        [socket.handshake.auth.serverOffset || 0],
+        (_err, row) => {
+          socket.emit('chat message', row.content, row.id)
+        }
+      )
+    } catch (e) {
+    // something went wrong
+    }
+  }
+  
   socket.on('dragon', secretMessage => {
     io.emit('dragon scroll', secretMessage)
   })
