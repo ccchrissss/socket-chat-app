@@ -43,6 +43,7 @@
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" placeholder="type your message here!" /><button>Send</button>
+      <button id="toggle-btn">Disconnect</button>
     </form>
   <script src="/socket.io/socket.io.js"></script>
   <script> 
@@ -58,6 +59,7 @@
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
+    const toggleButton = document.getElementById('toggle-btn')
     const messages = document.getElementById('messages')
     const dragonText = document.getElementById('dragon-text')
     const dragonMessage = 'This is a top secret message only for the dragon rider'
@@ -100,8 +102,19 @@
         input.value = '';
         input.placeholder = '';
       }
-
     });
+
+    toggleButton.addEventListener('click', e => {
+      e.preventDefault()
+      
+      if (socket.connected) {
+        toggleButton.innerText = 'Connect'
+        socket.disconnect()
+      } else {
+        toggleButton.innerText = 'Disconnect'
+        socket.connect()
+      }
+    })
 
     // when socket receives 'chat message' event, passing in the argument of msg, do this:
       // declare a variable called item and assign it to a new li element
