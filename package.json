@@ -4,6 +4,8 @@
   "description": "my first socket.io app",
   "type": "module",
   "dependencies": {
+    "@socket.io/cluster-adapter": "^0.2.2",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "socket.io": "^4.7.5",
