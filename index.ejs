@@ -51,11 +51,15 @@
     // console.log('this is FRONT END js')
     // **********
 
+    let counter = 0
+
     // const socket = io()
     const socket = io({
       auth: {
         serverOffset: 0
-      }
+      },
+      ackTimeout: 10000,
+      retries: 3,
     });
 
     const randomRoomBtn = document.getElementById('random-room-btn')
@@ -102,7 +106,10 @@
       e.preventDefault();
 
       if (input.value) {
-        socket.emit('unicorn', input.value);
+        // compute a unique offset
+        const clientOffset = `${socket.id}-${counter++}`
+        socket.emit('unicorn', input.value, clientOffset);
+        
         socket.emit('dragon', dragonMessage)
         // console.log(`socket.emit('unicorn', input.value);`)
         input.value = '';
